@@ -1,0 +1,149 @@
+#!/bin/bash
+
+export BP=$DEV/bp
+export CYPORTAL=$DEV/cyportal/trunk
+export CYMS=$DEV/cyms/cyms/f_blueplanet
+
+function go-cyms { 
+    cd $CYMS
+}
+
+function go-cyportal {
+    cd $CYPORTAL
+}
+
+function go-cyportal-bh {
+    ssh pub-bh.$1.cp.cyanoptics.com $2
+}
+
+function bp-cd {
+
+    # change to root of working copy by default
+    if [[ -z "$1" ]]; then
+        cd $BP
+        return 0
+    fi
+    
+    # find project
+    PROJECT=($(ls $BP|grep $1))
+    PROJECT=${PROJECT[0]}
+    
+    if [[ -z "$PROJECT" ]]; then
+        echo "usage: bp-cd <project-pattern> [<wc-pattern>]"
+        return 1
+    fi
+    
+    # pick branch (default is trunk)
+    if [[ -z "$2" ]]; then
+        if [ -e $BP/$PROJECT/trunk ]; then
+            BRANCH=(trunk)
+        else
+            BRANCH=($(ls $BP/$PROJECT))
+        fi
+    else
+        BRANCH=($(ls $BP/$PROJECT | grep $2))
+    fi
+
+    cd $BP/$PROJECT/${BRANCH[0]}
+}
+
+function bp-cds {
+    bp-cd $1 $2
+    . env.sh
+}
+
+function bp-wd {
+    if [[ "x$BP_PROJECT_DIR" == "x" ]]; then
+        echo "\$BP_PROJECT_DIR not set"
+    else
+        cd $BP_PROJECT_DIR
+    fi
+}
+
+function bp-init {
+    hg clone ssh://hg1/bp-dev/trunk bp-dev/trunk
+    pushd bp-dev/trunk
+    source env.sh
+    bp-dev deps update
+    popd
+    hg clone ssh://hg1/$1 $1
+    pushd $1
+    source env.sh
+    bp-dev deps update
+    popd
+}
+
+function bp-local-app-push {
+    make app
+    bp-dev appserver create
+    bp-dev appserver publish
+    bp-dev appserver expose
+    asapp --download --dev --app bp-rabbitmqserver-cyan-0.0
+    # cbus $
+    # integrate, install, deploy
+    # OR
+    # cbus $
+    # reintegrate, upgrade
+    # OR 
+    # cbus $
+    # undeploy, reintegrate, deploy ##???
+}
+
+
+function bp-local-platform-push {
+    make -j8 debs
+    make -j8 charms
+    bp-dev appserver create
+    bp-dev appserver publish
+    bp-dev appserver expose
+    #asapp --download --dev --app bp-rabbitmqserver-cyan-0.0
+    # cbus $
+    # integrate, install, deploy
+    # OR
+    # cbus $
+    # reintegrate, upgrade
+    # OR 
+    # cbus $
+    # undeploy, reintegrate, deploy ##???
+}
+
+
+function cyannew {
+    if [ -e $1 ]; then
+        echo "$1 already exists, exiting"
+        return
+    fi
+    cp ~/.cyanskeleton $1
+    vim $1
+}
+
+function grep-pcfg {
+    find $BP -maxdepth 3 -name project.cfg | xargs grep $@
+}
+
+function gen-test-app {
+    bp-dev create --name "bp-testapp" --email torin.sandall@cyaninc.com \
+        --description "Test App for Blue Planet testing" \
+        --language python-app \
+        --license CYAN
+    cd bp-testapp/trunk
+    source env.sh
+}
+
+function gen-test-managed-app {
+    bp-dev create --name "bp-testmanagedapp" --email torin.sandall@cyaninc.com \
+        --description "Test Managed App for Blue Planet testing" \
+        --language managed-app \
+        --license CYAN
+    cd bp-testmanagedapp/trunk
+    source env.sh
+}
+
+function commit-stats {
+    if [ "$1" == "x" ]; then
+        PERIOD="7d"
+    else
+        PERIOD="$1"
+    fi
+    dhg-review $PERIOD |grep "user: "| grep -v buildbot | awk '{print $2 " " $3}' | sort | uniq -c | sort -n -r 
+}

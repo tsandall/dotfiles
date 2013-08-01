@@ -1,0 +1,6 @@
+export DEV=$HOME/dev
+export VIRTUALENV_DIR=$HOME/dev/virtualenv
+alias ls='ls -G'
+alias ll='ls -l -h'
+#alias vim='mvim'
+#alias vi='vim'

@@ -1,0 +1,9 @@
+bufferfile              $HOME/.screen-buffer.txt
+term                    xterm-256color 
+shell                   /bin/bash
+vbell                   off
+defscrollback           99999
+startup_message         off
+autodetach              on
+bell_msg                "" 
+hardstatus alwayslastline "%{b w} %{g}%l %{w}| %{c}%Y-%m-%d %C:%s%A %{w}| %{w}%u %-Lw%{= rW}%50> %n%f %t %{-}%+Lw%<"

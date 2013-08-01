@@ -1,0 +1,5 @@
+export DEV=$HOME/dev
+export VIRTUALENV_DIR=$HOME/envs
+alias ls='ls --color=auto' 
+alias ll='ls -l -h'
+alias top='top -d 2'

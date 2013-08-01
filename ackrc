@@ -1,0 +1,3 @@
+--ignore-dir=deb_dist
+--type-set=rst=.rst
+--type-set=mk=.mk
