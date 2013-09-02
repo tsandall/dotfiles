@@ -9,15 +9,17 @@
 TERM="xterm-256color"
 PS1='\u:\W\$ '
 #PS1="${SCREENTITLE}${PS1}"
-
 set -o vi
-
 #shopt -s checkwinsize               
 shopt -s histappend                 
 
 export HISTCONTROL=erasedups 
 export HISTSIZE=99999
-
+export PATH=/usr/share/zookeeper/bin:$PATH
+export PATH=$HOME/bin:$PATH
+export LANGUAGE=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
 export EDITOR="vim"
 export SVN_EDITOR="$EDITOR"
 
@@ -44,6 +46,11 @@ alias hg-outstanding="find . -maxdepth 2 -type d | grep '\\/.+\\/' | \
 xargs -n 1 -I x bash -c \
 '{ echo x; hg status --cwd x ; }'"
 alias fps='ps auxwww -H'
+alias ack='ack-grep'
+alias ackc='ack-grep --ignore-dir="tests"'
+alias gist='gist -p'
+alias nosecov='nosetests --with-cov --cov-report term-missing'
+alias dev='ssh -t dev-vm screen -dR $1'
 
 function go-env {
 
@@ -179,6 +186,36 @@ function set_virtualenv () {
   fi
 }
 
+
+# Copied from https://github.com/jimeh/git-aware-prompt
+find_git_branch() {
+  # Based on: http://stackoverflow.com/a/13003854/170413
+  local branch
+  if branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null); then
+    if [[ "$branch" == "HEAD" ]]; then
+      branch='detached*'
+    fi
+    git_branch="(${LIGHT_RED}$branch${COLOR_NONE})"
+  else
+    git_branch=""
+  fi
+}
+
+find_git_dirty() {
+  local status=$(git status --porcelain 2> /dev/null)
+  if [[ "$status" != "" ]]; then
+    git_dirty="[${BLUE}*${COLOR_NONE}]"
+  else
+    git_dirty=''
+  fi
+}
+
+function set_git_prompt() {
+    find_git_branch
+    find_git_dirty
+    GIT_PROMPT="${git_branch}${git_dirty}"
+}
+
 function set_bash_prompt () {
   # Set the PROMPT_SYMBOL variable. We do this first so we don't lose the
   # return value of the last command.
@@ -192,48 +229,18 @@ function set_bash_prompt () {
   fi
 
   set_hg_prompt
-  
+  set_git_prompt
+
   # Set the bash prompt variable.
-  PS1="${PYTHON_VIRTUALENV}${BP_PROJECT}${HG_PROMPT}${COLOR_NONE}\u@\h:\w${PROMPT_SYMBOL} "
+  PS1="${PYTHON_VIRTUALENV}${BP_PROJECT}${GIT_PROMPT}${HG_PROMPT}${COLOR_NONE}\u@\h:\w${PROMPT_SYMBOL} "
 }
 
 # Tell bash to execute this function just before displaying its prompt.
 PROMPT_COMMAND=set_bash_prompt
 
-OS=$(uname -s)
-
-if [[ $OS == "Linux" ]]; then
-    source $HOME/.dotfiles/bashrc.linux
-elif [[ $OS == "Darwin" ]]; then
-    source $HOME/.dotfiles/bashrc.mac
-fi
-
-source $HOME/.workrc
-export PATH=/usr/share/zookeeper/bin:$PATH
-export PATH=$HOME/bin:$PATH
-
-if [ -e $SSH_AGENT_EXPORTS_FILE ]; then
-    if [ -z $SSH_AUTH_SOCK ]; then
-        eval-ssh-agent
-    fi
-elif [ -z $SSH_AUTH_SOCK ]; then
-    start-ssh-agent
-fi
-
-alias ack='ack-grep'
-alias ackc='ack-grep --ignore-dir="tests"'
-
-export LANGUAGE=en_US.UTF-8
-export LANG=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
-
 function cdl () {
-
     cd /var/lib/lxc/`ls /var/lib/lxc | grep $1`/rootfs
-
 }
-
-alias dev='ssh -t dev-vm screen -dR $1'
 
 function go-vagrant {
     if [ $# -eq 0 ]; then
@@ -243,4 +250,20 @@ function go-vagrant {
     fi
 }
 
-alias gist='gist -p'
+OS=$(uname -s)
+
+if [[ $OS == "Linux" ]]; then
+    source $HOME/.dotfiles/bashrc.linux
+elif [[ $OS == "Darwin" ]]; then
+    source $HOME/.dotfiles/bashrc.mac
+fi
+
+if [ -e $SSH_AGENT_EXPORTS_FILE ]; then
+    if [ -z $SSH_AUTH_SOCK ]; then
+        eval-ssh-agent
+    fi
+elif [ -z $SSH_AUTH_SOCK ]; then
+    start-ssh-agent
+fi
+
+source $HOME/.workrc
