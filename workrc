@@ -147,3 +147,5 @@ function commit-stats {
     fi
     dhg-review $PERIOD |grep "user: "| grep -v buildbot | awk '{print $2 " " $3}' | sort | uniq -c | sort -n -r 
 }
+
+export GITHUB_URL="http://github.cyanoptics.com/"
