@@ -30,6 +30,7 @@ set wildignore+=*charm-build
 set wildignore+=*.deb
 set wildignore+=_trial_temp
 set wildignore+=usr
+set wildignore+=target
 set suffixes=.bak,~,*.o,.info,.swp,.obj
 set history=1000
 set hidden
@@ -60,9 +61,10 @@ au BufRead *.batch set nowrap
 au BufRead *.log set nowrap
 au BufWritePre *.py :%s/\s\+$//e
 au BufWritePre *.cfg :%s/\s\+$//e
-au BufWritePre *.rst :%s/\s\+$//e
+au BufWritePre *.rst,*.md :%s/\s\+$//e
 au BufWritePre *.scala :%s/\s\+$//e
 au BufWritePre *.sbt :%s/\s\+$//e
+au BufWritePre *.conf :%s/\s\+$//e
 
 map <silent> !s :!sudo vi %<cr>
 map <silent> ,w :w<cr>
@@ -90,6 +92,9 @@ map <silent> <S-j> <C-w>+
 map <silent> <S-k> <C-w>-
 map <silent> <S-h> <C-w><
 map <silent> <S-l> <C-w>>
+vmap <Leader>h :<C-U>!hg blame -fu <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
+map <leader>n :NERDTreeToggle<CR>
+
 
 let g:jedi#pydoc = "<C-k>"
 
@@ -152,5 +157,3 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 
 let g:jedi#auto_initialization = 1
 let g:jedi#auto_vim_configuration = 1
-
-vmap <Leader>h :<C-U>!hg blame -fu <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>

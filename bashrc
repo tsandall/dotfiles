@@ -15,7 +15,7 @@ shopt -s histappend
 
 export HISTCONTROL=erasedups 
 export HISTSIZE=99999
-export PATH=/usr/share/zookeeper/bin:$PATH
+export PATH=/usr/share/zookeeper/bin:/usr/local/sbin:$PATH
 export PATH=$HOME/bin:$PATH
 export LANGUAGE=en_US.UTF-8
 export LANG=en_US.UTF-8
@@ -50,7 +50,6 @@ alias ack='ack-grep'
 alias ackc='ack-grep --ignore-dir="tests"'
 alias gist='gist -p'
 alias nosecov='nosetests --with-cov --cov-report term-missing'
-alias dev='ssh -t dev-vm screen -dR $1'
 
 function go-env {
 
@@ -266,4 +265,6 @@ elif [ -z $SSH_AUTH_SOCK ]; then
     start-ssh-agent
 fi
 
+
 source $HOME/.workrc
+source $HOME/.z.sh
