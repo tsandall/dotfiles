@@ -6,8 +6,10 @@ call pathogen#helptags()
 call pathogen#runtime_append_all_bundles()
 
 syntax enable
+let g:seoul256_background = 236
+color seoul256
 set background=dark "this must come before colors are set up
-color grb256 
+"color grb256 
 hi Visual cterm=none ctermfg=black ctermbg=cyan
 hi StatusLine cterm=none ctermfg=black ctermbg=cyan
 hi StatusLineNC cterm=none ctermfg=black ctermbg=gray
@@ -60,6 +62,7 @@ au BufWritePre *.py :%s/\s\+$//e
 au BufWritePre *.cfg :%s/\s\+$//e
 au BufWritePre *.rst :%s/\s\+$//e
 au BufWritePre *.scala :%s/\s\+$//e
+au BufWritePre *.sbt :%s/\s\+$//e
 
 map <silent> !s :!sudo vi %<cr>
 map <silent> ,w :w<cr>

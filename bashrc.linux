@@ -1,5 +1,5 @@
-export DEV=$HOME/dev
-export VIRTUALENV_DIR=$HOME/dev
+export DEV=$HOME/work
+export VIRTUALENV_DIR=$HOME/work
 alias ls='ls --color=auto' 
 alias ll='ls -l -h'
 alias top='top -d 2'

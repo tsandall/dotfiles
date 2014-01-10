@@ -1,0 +1,7 @@
+[user]
+    name = Torin Sandall
+    email = torin.sandall@cyaninc.com
+[color]
+    ui = true
+[init]
+	templatedir = /home/tsandall/.git_template
