@@ -17,6 +17,7 @@ export HISTCONTROL=erasedups
 export HISTSIZE=99999
 export PATH=/usr/share/zookeeper/bin:/usr/local/sbin:$PATH
 export PATH=$HOME/bin:$PATH
+export PATH=$HOME/bin/sbt/bin:$PATH
 export LANGUAGE=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
@@ -268,3 +269,5 @@ fi
 
 source $HOME/.workrc
 source $HOME/.z.sh
+
+source $HOME/.dotfiles/git-completion.bash

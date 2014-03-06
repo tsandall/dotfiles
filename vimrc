@@ -7,9 +7,9 @@ call pathogen#runtime_append_all_bundles()
 
 syntax enable
 let g:seoul256_background = 236
-color seoul256
 set background=dark "this must come before colors are set up
-"color grb256 
+"olor seoul256
+color grb256 
 hi Visual cterm=none ctermfg=black ctermbg=cyan
 hi StatusLine cterm=none ctermfg=black ctermbg=cyan
 hi StatusLineNC cterm=none ctermfg=black ctermbg=gray
