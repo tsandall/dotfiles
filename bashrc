@@ -48,6 +48,7 @@ xargs -n 1 -I x bash -c \
 alias fps='ps auxwww -H'
 alias ack='ack-grep'
 alias ackc='ack-grep --ignore-dir="tests"'
+alias ackc='ack-grep --ignore-dir="tests" --type=python'
 alias gist='gist -p'
 alias nosecov='nosetests --with-cov --cov-report term-missing'
 

@@ -1,6 +1,7 @@
 [user]
-    name = Torin Sandall
-    email = torin.sandall@cyaninc.com
+	name = Torin Sandall
+	email = torin.sandall@cyaninc.com
+	ldap = tsandall
 [color]
     ui = true
 [init]
