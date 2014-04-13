@@ -4,3 +4,39 @@ alias ls='ls -G'
 alias ll='ls -l -h'
 #alias vim='mvim'
 #alias vi='vim'
+
+# iTerm2 window/tab color commands
+#   Requires iTerm2 >= Build 1.0.0.20110804
+#   http://code.google.com/p/iterm2/wiki/ProprietaryEscapeCodes
+tab-color() {
+    echo -ne "\033]6;1;bg;red;brightness;$1\a"
+    echo -ne "\033]6;1;bg;green;brightness;$2\a"
+    echo -ne "\033]6;1;bg;blue;brightness;$3\a"
+}
+
+tab-reset() {
+    echo -ne "\033]6;1;bg;*;default\a"
+}
+
+randomize-tab-color() {
+
+    number_of_shells=$(ps |grep "\-bash" -c)
+    primary_color=$((number_of_shells % 6))
+    x=$(((RANDOM % 50)+150))
+    y=$((x/2))
+    case "$primary_color" in
+        0) tab-color $x $y 0
+            ;;
+        1) tab-color $x 0 $y
+            ;;
+        2) tab-color 0 $x $y
+            ;;
+        3) tab-color $y $x 0
+            ;;
+        4) tab-color 0 $y $x
+            ;;
+        5) tab-color $y 0 $x
+    esac
+}
+
+randomize-tab-color

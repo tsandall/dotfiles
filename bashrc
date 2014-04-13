@@ -270,5 +270,4 @@ fi
 
 source $HOME/.workrc
 source $HOME/.z.sh
-
 source $HOME/.dotfiles/git-completion.bash
