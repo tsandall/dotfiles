@@ -25,13 +25,13 @@ randomize-tab-color() {
     x=$(((RANDOM % 50)+150))
     y=$((x/2))
     case "$primary_color" in
-        0) tab-color $x $y 0
+        0) tab-color 0 $y 0
             ;;
         1) tab-color $x 0 $y
             ;;
         2) tab-color 0 $x $y
             ;;
-        3) tab-color $y $x 0
+        3) tab-color 0 $x 0
             ;;
         4) tab-color 0 $y $x
             ;;
