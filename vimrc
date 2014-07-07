@@ -63,6 +63,7 @@ au BufWritePre *.rst,*.md :%s/\s\+$//e
 au BufWritePre *.scala :%s/\s\+$//e
 au BufWritePre *.sbt :%s/\s\+$//e
 au BufWritePre *.conf :%s/\s\+$//e
+au BufWritePre *.sh :%s/\s\+$//e
 
 map <silent> !s :!sudo vi %<cr>
 map <silent> ,w :w<cr>
