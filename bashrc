@@ -86,11 +86,6 @@ function svn-status-ignore-unversioned {
     svn status | grep "^([^\? ]|       \*)"
 }
 
-function go-dev {
-    #ssh tsandall@localhost -p 2222
-    cd $DEV
-}
-
 # history_of_file
 #
 # Outputs the full history of a given file as a sequence of
@@ -271,3 +266,4 @@ fi
 source $HOME/.workrc
 source $HOME/.z.sh
 source $HOME/.dotfiles/git-completion.bash
+
