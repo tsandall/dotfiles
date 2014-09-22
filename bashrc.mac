@@ -19,11 +19,16 @@ tab-reset() {
 }
 
 randomize-tab-color() {
-
-    number_of_shells=$(ps |grep "\-bash" -c)
-    primary_color=$((number_of_shells % 6))
-    x=$(((RANDOM % 50)+150))
-    y=$((x/2))
+    if [ -f ~/.last_iterm2_color ]; then 
+      primary_color=$(<~/.last_iterm2_color)
+    else
+      primary_color="0"
+    fi
+    echo $(((primary_color + 1) % 6)) > ~/.last_iterm2_color
+    #x=$(((RANDOM % 50)+150))
+    x=175
+    y=80
+    #y=$((x/2))
     case "$primary_color" in
         0) tab-color 0 $y 0
             ;;
@@ -41,4 +46,4 @@ randomize-tab-color() {
 
 randomize-tab-color
 
-export PATH=$PATH:~/lib/scala-2.11.0/bin/
+export PATH=$PATH:~/lib/scala-2.10.4/bin
