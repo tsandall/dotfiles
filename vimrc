@@ -49,6 +49,7 @@ set ignorecase
 set smartcase
 set hlsearch
 set incsearch
+set completeopt-=preview
 
 au BufRead *.txt set spell
 au BufRead Makefile,makefile,*.mk set noexpandtab nosmarttab
@@ -84,8 +85,9 @@ map <F7> :w !xclip<CR><CR>
 map <S-F7> :r !xclip -o<CR>
 map <leader>f :CommandTFlush<cr>\|:CommandT<cr>
 map <leader>F :CommandTFlush<cr>\|:CommandT %%<cr>
-map ,r :w<cr>:!python %<cr>
-map ,t :w<cr>:!trial -e %<cr>
+autocmd FileType python map ,r :w<cr>:!python %<cr>
+autocmd FileType python map ,t :w<cr>:!trial -e %<cr>
+autocmd FileType go map ,r :w<cr>:GoRun %<cr>
 "map <C-]> :RopeGotoDefinition<cr>
 map <silent> <S-j> <C-w>+
 map <silent> <S-k> <C-w>-
@@ -93,11 +95,6 @@ map <silent> <S-h> <C-w><
 map <silent> <S-l> <C-w>>
 vmap <Leader>h :<C-U>!hg blame -fu <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
 map <leader>n :NERDTreeToggle<CR>
-
-
-let g:jedi#pydoc = "<C-k>"
-
-command -bar Hexmode call ToggleHex()
 
 filetype plugin indent on
 
@@ -153,6 +150,3 @@ nnoremap <Leader>? :PythonLocation<CR>
 
 "let g:CommandTMaxFiles=100000
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-
-let g:jedi#auto_initialization = 1
-let g:jedi#auto_vim_configuration = 1

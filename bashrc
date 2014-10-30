@@ -25,7 +25,6 @@ export EDITOR="vim"
 export SVN_EDITOR="$EDITOR"
 
 alias vi='vim'
-alias ack='ack-grep'
 alias ctags-create='ctags --recurse --sort=yes --extra=+fq --fields=+i --python-kinds=i'
 alias screen-start='screen -d -R -c $HOME/.screenrc -S $1'
 alias screen-buffer='vim $HOME/.screen-buffer'
@@ -48,9 +47,7 @@ xargs -n 1 -I x bash -c \
 '{ echo x; hg status --cwd x ; }'"
 alias fps='ps auxwww -H'
 alias ack='ack-grep'
-alias ackc='ack-grep --ignore-dir="tests"'
-alias ackc='ack-grep --ignore-dir="tests" --type=python'
-alias gist='gist -p'
+alias gist='gist -c -p'
 alias nosecov='nosetests --with-cov --cov-report term-missing'
 
 function go-env {
@@ -263,7 +260,8 @@ elif [ -z $SSH_AUTH_SOCK ]; then
 fi
 
 
-source $HOME/.workrc
-source $HOME/.z.sh
+source $HOME/.dotfiles/workrc
+source $HOME/.dotfiles/z.sh
 source $HOME/.dotfiles/git-completion.bash
 
+export GOPATH=$HOME/dev/go

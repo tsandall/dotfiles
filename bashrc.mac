@@ -24,23 +24,20 @@ randomize-tab-color() {
     else
       primary_color="0"
     fi
-    echo $(((primary_color + 1) % 6)) > ~/.last_iterm2_color
-    #x=$(((RANDOM % 50)+150))
+    echo $(((primary_color + 1) % 5)) > ~/.last_iterm2_color
     x=175
     y=80
     #y=$((x/2))
     case "$primary_color" in
-        0) tab-color 0 $y 0
+        0) tab-color $x 0 $y
             ;;
-        1) tab-color $x 0 $y
+        1) tab-color 0 $x $y
             ;;
-        2) tab-color 0 $x $y
+        2) tab-color 0 $x 0
             ;;
-        3) tab-color 0 $x 0
+        3) tab-color 0 $y $x
             ;;
-        4) tab-color 0 $y $x
-            ;;
-        5) tab-color $y 0 $x
+        4) tab-color $y 0 $x
     esac
 }
 
