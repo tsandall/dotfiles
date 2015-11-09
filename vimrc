@@ -1,6 +1,7 @@
 filetype detect
 
 set nocompatible
+
 call pathogen#infect()
 call pathogen#helptags()
 call pathogen#runtime_append_all_bundles()
@@ -51,6 +52,11 @@ set hlsearch
 set incsearch
 set completeopt-=preview
 
+autocmd FileType yaml set sw=2
+autocmd FileType html set sw=2
+autocmd FileType js set sw=2
+
+au BufNewFile,BufRead *.tosca set filetype=hocon
 au BufRead *.txt set spell
 au BufRead Makefile,makefile,*.mk set noexpandtab nosmarttab
 au BufRead CMake* set nospell
@@ -58,6 +64,7 @@ au BufRead *.htm* set textwidth=160
 au BufRead *.py set nocindent
 au BufRead *.batch set nowrap
 au BufRead *.log set nowrap
+au BufRead *.py set textwidth=120
 au BufWritePre *.py :%s/\s\+$//e
 au BufWritePre *.cfg :%s/\s\+$//e
 au BufWritePre *.rst,*.md :%s/\s\+$//e
@@ -65,6 +72,7 @@ au BufWritePre *.scala :%s/\s\+$//e
 au BufWritePre *.sbt :%s/\s\+$//e
 au BufWritePre *.conf :%s/\s\+$//e
 au BufWritePre *.sh :%s/\s\+$//e
+au BufWritePre *.yaml :%s/\s\+$//e
 
 map <silent> !s :!sudo vi %<cr>
 map <silent> ,w :w<cr>
@@ -150,3 +158,11 @@ nnoremap <Leader>? :PythonLocation<CR>
 
 "let g:CommandTMaxFiles=100000
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<c-c>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+let g:khuno_max_line_length=120

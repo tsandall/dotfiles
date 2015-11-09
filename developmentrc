@@ -1,0 +1,29 @@
+function venv {
+    source $HOME/env/bin/activate
+}
+
+function cdp {
+    cd $(python -c "import os.path as _, ${1}; print _.dirname(_.realpath(${1}.__file__[:-1]))")
+}
+
+function dminit {
+    eval "$(docker-machine env default)"
+    echo "ok"
+}
+
+function dmdns {
+   docker-machine ssh default "echo 'nameserver 10.0.2.2' > /etc/resolv.conf"
+   echo "ok"
+}
+
+function dmssh {
+    docker-machine ssh default
+}
+
+function dmip {
+    docker-machine ip default
+}
+
+eval "$(jenv init -)"
+
+export GOPATH=$HOME/dev/go
