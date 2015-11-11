@@ -24,6 +24,6 @@ function dmip {
     docker-machine ip default
 }
 
-eval "$(jenv init -)"
+which jenv 1>/dev/null && eval "$(jenv init -)" || true
 
 export GOPATH=$HOME/dev/go
