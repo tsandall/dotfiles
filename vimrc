@@ -1,10 +1,17 @@
 filetype detect
+filetype plugin indent on
 
 set nocompatible
 
 call pathogen#infect()
 call pathogen#helptags()
 call pathogen#runtime_append_all_bundles()
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+" Misc. Settings
+"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 syntax enable
 set background=dark "this must come before colors are set up
@@ -13,11 +20,6 @@ hi Visual cterm=none ctermfg=black ctermbg=cyan
 hi StatusLine cterm=none ctermfg=black ctermbg=cyan
 hi StatusLineNC cterm=none ctermfg=black ctermbg=gray
 hi SpellBad cterm=none ctermbg=19 
-"hi OverLength ctermbg=black ctermfg=white 
-"au bufread *.py match OverLength /\%81v.*/
-"hi SpellBad cterm=underline
-"hi SpellBad ctermfg=white ctermbg=444444 cterm=none
- 
 set textwidth=78
 set formatoptions=tcroq
 set wildmode=list:longest,list:full
@@ -51,11 +53,7 @@ set smartcase
 set hlsearch
 set incsearch
 set completeopt-=preview
-
-autocmd FileType yaml set sw=2
-autocmd FileType html set sw=2
-autocmd FileType js set sw=2
-
+set encoding=utf-8
 au BufNewFile,BufRead *.tosca set filetype=hocon
 au BufRead *.txt set spell
 au BufRead Makefile,makefile,*.mk set noexpandtab nosmarttab
@@ -73,8 +71,19 @@ au BufWritePre *.sbt :%s/\s\+$//e
 au BufWritePre *.conf :%s/\s\+$//e
 au BufWritePre *.sh :%s/\s\+$//e
 au BufWritePre *.yaml :%s/\s\+$//e
+autocmd FileType yaml set sw=2
+autocmd FileType html set sw=2
+autocmd FileType js set sw=2
+let g:Powerline_symbols='fancy'
+let g:UltiSnipsExpandTrigger="<c-c>"
+let g:UltiSnipsEditSplit="vertical"
 
-map <silent> !s :!sudo vi %<cr>
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+" Aliases 
+"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 map <silent> ,w :w<cr>
 map <silent> ,/ :s/^/\/\//<CR>:noh<CR>
 map <silent> ./ :s/\/\{1,\}\///<CR>:noh<CR>
@@ -84,35 +93,18 @@ map <silent> ,; :s/^/;/<CR>:noh<CR>
 map <silent> .; :s/;//<CR>:noh<CR>
 map <silent> <C-n> :bn<CR>
 map <silent> <C-p> :bp<CR>
-map <silent> ,xt <ESC>:%!xmllint --format -<CR>
-map <silent> ,jt <ESC>:%!python -m simplejson.tool<CR>
-nnoremap <C-H> :Hexmode<CR>
-inoremap <C-H> <Esc>:Hexmode<CR>
-vnoremap <C-H> :<C-u>Hexmode<CR>
-map <F7> :w !xclip<CR><CR>
-map <S-F7> :r !xclip -o<CR>
-map <leader>f :CommandTFlush<cr>\|:CommandT<cr>
-map <leader>F :CommandTFlush<cr>\|:CommandT %%<cr>
-autocmd FileType python map ,r :w<cr>:!python %<cr>
-autocmd FileType python map ,t :w<cr>:!trial -e %<cr>
-autocmd FileType go map ,r :w<cr>:GoRun %<cr>
-"map <C-]> :RopeGotoDefinition<cr>
 map <silent> <S-j> <C-w>+
 map <silent> <S-k> <C-w>-
 map <silent> <S-h> <C-w><
 map <silent> <S-l> <C-w>>
-vmap <Leader>h :<C-U>!hg blame -fu <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
-map <leader>n :NERDTreeToggle<CR>
+map <leader>f :CommandTFlush<cr>\|:CommandT<cr>
+map <leader>F :CommandTFlush<cr>\|:CommandT %%<cr>
 
-filetype plugin indent on
-
-let g:python_highlight_builtins=1
-let g:python_highlight_exceptions=1
-
-"python from powerline.ext.vim import source_plugin; source_plugin()
-
-let g:Powerline_symbols='fancy'
-set encoding=utf-8
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+" Python
+"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 function! s:get_last_python_class()
     let l:retval = ""
@@ -154,15 +146,11 @@ function! <SID>EchoPythonLocation()
 endfunction
  
 command! PythonLocation :call <SID>EchoPythonLocation()
-nnoremap <Leader>? :PythonLocation<CR>
-
-"let g:CommandTMaxFiles=100000
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<c-c>"
-
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
 
 let g:khuno_max_line_length=120
+let g:python_highlight_builtins=1
+let g:python_highlight_exceptions=1
+
+autocmd FileType python nnoremap <Leader>? :PythonLocation<CR>
+autocmd FileType python map ,r :w<cr>:!python %<cr>
+autocmd FileType python map ,t :w<cr>:!trial -e %<cr>
