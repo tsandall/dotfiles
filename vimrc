@@ -97,8 +97,6 @@ map <silent> <S-j> <C-w>+
 map <silent> <S-k> <C-w>-
 map <silent> <S-h> <C-w><
 map <silent> <S-l> <C-w>>
-map <leader>f :CommandTFlush<cr>\|:CommandT<cr>
-map <leader>F :CommandTFlush<cr>\|:CommandT %%<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
