@@ -5,7 +5,6 @@ alias :q='exit'
 alias :w='sync'
 alias grep='grep --color=auto'
 alias grep='grep -E'
-alias ack='ack-grep'
 alias gist='gist -c -p'
 
 PLATFORM=$(uname)

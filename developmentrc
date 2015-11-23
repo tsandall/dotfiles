@@ -1,5 +1,5 @@
 function venv {
-    source $HOME/env/bin/activate
+    source $HOME/.venv/bin/activate
 }
 
 function cdp {
@@ -12,7 +12,7 @@ function dminit {
 }
 
 function dmdns {
-   docker-machine ssh default "echo 'nameserver 10.0.2.2' > /etc/resolv.conf"
+   docker-machine ssh default "echo 'nameserver 10.0.1.174' > /etc/resolv.conf"
    echo "ok"
 }
 
@@ -22,6 +22,16 @@ function dmssh {
 
 function dmip {
     docker-machine ip default
+}
+
+function denter {
+    CONTAINER_ID=$(docker ps | grep "$1" | awk '{print $1}' | head -n 1)
+    docker exec -it $CONTAINER_ID bash
+}
+
+function dclear {
+    docker kill $(docker ps -a -q) || true
+    docker rm $(docker ps -a -q) || true
 }
 
 which jenv 1>/dev/null && eval "$(jenv init -)" || true

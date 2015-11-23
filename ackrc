@@ -1,3 +1,5 @@
 --ignore-dir=deb_dist
+--ignore-dir=target
+--type-set=tosca=.tosca
 --type-set=rst=.rst
 --type-set=mk=.mk

@@ -15,3 +15,9 @@ export PATH=/usr/local/sbin:$PATH
 export PATH=$HOME/bin:$PATH
 export PATH=$HOME/bin/sbt/bin:$PATH
 export PATH=$HOME/lib/scala-2.11.6/bin:$PATH
+
+OS=$(uname)
+
+if [[ $OS == "Darwin" ]]; then
+    export PATH=$HOME/Library/Python/2.7/bin:$PATH
+fi

@@ -12,7 +12,6 @@ call pathogen#runtime_append_all_bundles()
 " Misc. Settings
 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 syntax enable
 set background=dark "this must come before colors are set up
 color grb256 
