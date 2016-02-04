@@ -76,6 +76,7 @@ autocmd FileType js set sw=2
 let g:Powerline_symbols='fancy'
 let g:UltiSnipsExpandTrigger="<c-c>"
 let g:UltiSnipsEditSplit="vertical"
+let g:ctrlp_custom_ignore="env"
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
@@ -90,8 +91,8 @@ map <silent> ,# :s/^/#/<CR>:noh<CR>
 map <silent> .# :s/#//<CR>:noh<CR>
 map <silent> ,; :s/^/;/<CR>:noh<CR>
 map <silent> .; :s/;//<CR>:noh<CR>
-map <silent> <C-n> :bn<CR>
-map <silent> <C-p> :bp<CR>
+map <silent> <C-n> :bp<CR>
+map <silent> <C-m> :bn<CR>
 map <silent> <S-j> <C-w>+
 map <silent> <S-k> <C-w>-
 map <silent> <S-h> <C-w><
@@ -151,3 +152,24 @@ let g:python_highlight_exceptions=1
 autocmd FileType python nnoremap <Leader>? :PythonLocation<CR>
 autocmd FileType python map ,r :w<cr>:!python %<cr>
 autocmd FileType python map ,t :w<cr>:!trial -e %<cr>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+" Golang 
+"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+autocmd FileType go nmap ,r :w<cr>:GoRun %<cr>
+autocmd FileType go nmap ,b <Plug>(go-build)
+autocmd FileType go nmap ,t <Plug>(go-test)
+autocmd FileType go nmap ,ds <Plug>(go-def-split)
+autocmd FileType go nmap ,dv <Plug>(go-def-vertical)
+autocmd FileType go nmap ,dt <Plug>(go-def-tab)
+autocmd FileType go nmap ,gb <Plug>(go-doc-browser)
+autocmd FileType go nmap ,s <Plug>(go-implements)
+
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1

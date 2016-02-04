@@ -3,3 +3,4 @@
 --type-set=tosca=.tosca
 --type-set=rst=.rst
 --type-set=mk=.mk
+--type-set=md=.md
