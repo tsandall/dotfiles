@@ -18,14 +18,30 @@ function set_prompt_symbol () {
     fi
 }
 
-function set_virtualenv () {
-  if test -z "$VIRTUAL_ENV" ; then
-      PYTHON_VIRTUALENV=""
+function set_dev_env() {
+
+  # Set Python virtualenv name if activated
+  if [ -n "$VIRTUAL_ENV" ]; then
+    DEV_ENV="${COLOR_NONE}${YELLOW}`basename \"$VIRTUAL_ENV\"`${COLOR_NONE}"
   else
-      PYTHON_VIRTUALENV="${COLOR_NONE}[${YELLOW}`basename \"$VIRTUAL_ENV\"`${COLOR_NONE}]" #${COLOR_NONE}"
+    DEV_ENV=""
+  fi
+
+  # Set Golang GOPATH name if set
+  if [ -n "$GOPATH" ]; then
+    GOLANG_WORKSPACE="${COLOR_NONE}${YELLOW}`basename \"$GOPATH\"`${COLOR_NONE}"
+    if [ -n "$DEV_ENV" ]; then
+        DEV_ENV="${DEV_ENV}/${GOLANG_WORKSPACE}"
+    else
+        DEV_ENV=$GOLANG_WORKSPACE
+    fi
+  fi
+
+  # Wrap names in '[]' if set
+  if [ -n "$DEV_ENV" ]; then
+    DEV_ENV="${COLOR_NONE}[${DEV_ENV}${COLOR_NONE}]"
   fi
 }
-
 
 # Copied from https://github.com/jimeh/git-aware-prompt
 find_git_branch() {
@@ -61,13 +77,11 @@ function set_bash_prompt () {
   # return value of the last command.
   set_prompt_symbol $?
 
-  # Set the PYTHON_VIRTUALENV variable.
-  set_virtualenv
-
+  set_dev_env
   set_git_prompt
 
   # Set the bash prompt variable.
-  PS1="${PYTHON_VIRTUALENV}${GIT_PROMPT}${COLOR_NONE}${LIGHT_GREEN}\u${COLOR_NONE}:${BLUE}\w${PROMPT_SYMBOL} "
+  PS1="${DEV_ENV}${GIT_PROMPT}${COLOR_NONE}${LIGHT_GREEN}\u${COLOR_NONE}:${BLUE}\w${PROMPT_SYMBOL} "
 }
 
 # Tell bash to execute this function just before displaying its prompt.

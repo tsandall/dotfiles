@@ -1,5 +1,5 @@
 function venv {
-    source $HOME/.venv/bin/activate
+    source $HOME/Development/venv/bin/activate
 }
 
 function cdp {
@@ -9,11 +9,6 @@ function cdp {
 function dminit {
     eval "$(docker-machine env default)"
     echo "ok"
-}
-
-function dmdns {
-   docker-machine ssh default "echo 'nameserver 10.0.1.174' > /etc/resolv.conf"
-   echo "ok"
 }
 
 function dmssh {
@@ -34,6 +29,7 @@ function dclear {
     docker rm $(docker ps -a -q) || true
 }
 
-which jenv 1>/dev/null && eval "$(jenv init -)" || true
-
-export GOPATH=$HOME/Library/golang
+function goz {
+    z $1
+    export GOPATH=$PWD
+}
