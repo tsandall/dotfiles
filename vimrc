@@ -15,9 +15,7 @@ call pathogen#runtime_append_all_bundles()
 syntax enable
 set background=dark "this must come before colors are set up
 color grb256 
-hi Visual cterm=none ctermfg=black ctermbg=cyan
-hi StatusLine cterm=none ctermfg=black ctermbg=cyan
-hi StatusLineNC cterm=none ctermfg=black ctermbg=gray
+hi Visual cterm=none ctermfg=black ctermbg=green
 hi SpellBad cterm=none ctermbg=19 
 set textwidth=78
 set formatoptions=tcroq
@@ -31,6 +29,7 @@ set wildignore+=*.deb
 set wildignore+=_trial_temp
 set wildignore+=usr
 set wildignore+=target
+set wildignore+=vendor
 set suffixes=.bak,~,*.o,.info,.swp,.obj
 set history=1000
 set hidden
@@ -46,7 +45,6 @@ set autoindent
 set backspace=2
 set laststatus=2
 set number
-set statusline=%t%m%r%h%w\ %p%%\ line=%l\ char=%v\ max=%L\ %{TagInStatusLine()}
 set ignorecase
 set smartcase
 set hlsearch
@@ -73,10 +71,11 @@ au BufWritePre *.yaml :%s/\s\+$//e
 autocmd FileType yaml set sw=2
 autocmd FileType html set sw=2
 autocmd FileType js set sw=2
-let g:Powerline_symbols='fancy'
 let g:UltiSnipsExpandTrigger="<c-c>"
 let g:UltiSnipsEditSplit="vertical"
 let g:ctrlp_custom_ignore="env"
+let g:airline_powerline_fonts=1
+let g:airline#extensions#tabline#enabled=1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
@@ -97,6 +96,9 @@ map <silent> <S-j> <C-w>+
 map <silent> <S-k> <C-w>-
 map <silent> <S-h> <C-w><
 map <silent> <S-l> <C-w>>
+map <silent> <C-k> :lne<cr>
+map <silent> <C-l> :lp<cr>
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
@@ -122,7 +124,7 @@ autocmd FileType go nmap ,b <Plug>(go-build)
 autocmd FileType go nmap ,t <Plug>(go-test)
 autocmd FileType go nmap ,ds <Plug>(go-def-split)
 autocmd FileType go nmap ,dv <Plug>(go-def-vertical)
-autocmd FileType go nmap ,dt <Plug>(go-def-tab)
+autocmd FileType go nmap ,dt :GoDef<cr>
 autocmd FileType go nmap ,gb <Plug>(go-doc-browser)
 autocmd FileType go nmap ,s <Plug>(go-implements)
 
