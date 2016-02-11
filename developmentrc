@@ -29,7 +29,37 @@ function dclear {
     docker rm $(docker ps -a -q) || true
 }
 
-function goz {
+function genv {
+    if [ -z "$1" ]; then
+        echo "Must specify name of target directory."
+        return 1
+    fi
     z $1
-    export GOPATH=$PWD
+    __genv_rec $PWD
+    if [ $? -ne 0 ]; then
+        echo "Could not find Go workspace for $PWD."
+        return 1
+    fi
+}
+
+function __genv_rec {
+    stat $1/.genv 2>/dev/null 1>&2
+    if [ $? -eq 0 ]; then
+        export GOPATH=$1
+        pathadd $GOPATH/bin
+        return 0
+    elif [ "$1" != "/" ]; then
+        __genv_rec `dirname $1`
+        return $?
+    else
+        return 1
+    fi
+}
+
+function pathadd() {
+    # From
+    # http://superuser.com/questions/39751/add-directory-to-path-if-its-not-already-there
+    if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+        PATH="${PATH:+"$PATH:"}$1"
+    fi
 }
