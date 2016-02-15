@@ -76,6 +76,7 @@ let g:UltiSnipsEditSplit="vertical"
 let g:ctrlp_custom_ignore="env"
 let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled=1
+let g:ycm_key_detailed_diagnostics=''
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
@@ -112,6 +113,7 @@ let g:python_highlight_exceptions=1
 
 autocmd FileType python map ,r :w<cr>:!python %<cr>
 autocmd FileType python map ,t :w<cr>:!trial -e %<cr>
+autocmd FileType python map ,dt :call jedi#goto()<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
