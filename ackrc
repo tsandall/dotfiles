@@ -4,3 +4,4 @@
 --type-set=rst=.rst
 --type-set=mk=.mk
 --type-set=md=.md
+--ignore-dir=.venv

@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 RED="\[\033[0;31m\]"
 MAGENTA="\[\033[0;45m\]"
 YELLOW="\[\033[1;33m\]"
@@ -87,4 +89,5 @@ function set_bash_prompt () {
 # Tell bash to execute this function just before displaying its prompt.
 PROMPT_COMMAND=set_bash_prompt
 
-
+. $HOME/.dotfiles/z.sh
+. $HOME/.dotfiles/git-completion.bash

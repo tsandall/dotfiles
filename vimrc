@@ -52,7 +52,9 @@ set incsearch
 set completeopt-=preview
 set encoding=utf-8
 au BufNewFile,BufRead *.tosca set filetype=hocon
+au BufNewFile,BufRead *.yml set filetype=yaml
 au BufRead *.txt set spell
+au BufRead *.peg set filetype=go
 au BufRead Makefile,makefile,*.mk set noexpandtab nosmarttab
 au BufRead CMake* set nospell
 au BufRead *.htm* set textwidth=160
@@ -60,7 +62,11 @@ au BufRead *.py set nocindent
 au BufRead *.batch set nowrap
 au BufRead *.log set nowrap
 au BufRead *.py set textwidth=120
+au BufWritePre *.rego :%s/\s\+$//e
+au BufWritePre *.peg :%s/\s\+$//e
 au BufWritePre *.py :%s/\s\+$//e
+au BufWritePre *.go :%s/\s\+$//e
+au BufWritePre *.mk :%s/\s\+$//e
 au BufWritePre *.cfg :%s/\s\+$//e
 au BufWritePre *.rst,*.md :%s/\s\+$//e
 au BufWritePre *.scala :%s/\s\+$//e
@@ -99,7 +105,8 @@ map <silent> <S-h> <C-w><
 map <silent> <S-l> <C-w>>
 map <silent> <C-k> :lne<cr>
 map <silent> <C-l> :lp<cr>
-
+map <silent> ,x :Bclose<cr>
+map <silent> ,z :Bclose!<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
@@ -110,6 +117,7 @@ map <silent> <C-l> :lp<cr>
 let g:khuno_max_line_length=120
 let g:python_highlight_builtins=1
 let g:python_highlight_exceptions=1
+let g:airline_section_b='%{TagInStatusLine()}'
 
 autocmd FileType python map ,r :w<cr>:!python %<cr>
 autocmd FileType python map ,t :w<cr>:!trial -e %<cr>
@@ -135,3 +143,6 @@ let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
+let g:go_fmt_command = "goimports"
+let g:go_fmt_fail_silently = 1
+
