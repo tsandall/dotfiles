@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 [ -z "$PS1" ] && return
 
@@ -18,16 +18,16 @@ export EDITOR="vim"
 export LANGUAGE=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
+export GOPATH=$HOME/go
 
 export PATH=/usr/local/sbin:$PATH
 export PATH=$HOME/bin:$PATH
 export PATH=$HOME/bin/sbt/bin:$PATH
 export PATH=$HOME/lib/scala-2.11.6/bin:$PATH
 export PATH=$HOME/.gem/ruby/2.0.0/bin:$PATH
+export PATH=$GOPATH/bin:$PATH
 
-if [[ `uname` == "Darwin" ]]; then
-    export PATH=$HOME/Library/Python/2.7/bin:$PATH
-fi
+source $HOME/venv/bin/activate 
 
 # ---------------------------------
 # Prompt 
@@ -48,6 +48,7 @@ alias grep='grep --color=auto'
 alias grep='grep -E'
 alias gist='gist -c -p'
 alias mytodo='ack "TODO\(tsandall\)"'
+alias kc='kubectl'
 
 PLATFORM=$(uname)
 
@@ -58,10 +59,6 @@ else
 fi
 
 alias ll='ls -l -h'
-
-function venv {
-    source $HOME/Development/venv/bin/activate
-}
 
 function cdp {
     cd $(python -c "import os.path as _, ${1}; print _.dirname(_.realpath(${1}.__file__[:-1]))")
@@ -90,33 +87,6 @@ function dclear {
     docker rm $(docker ps -a -q) || true
 }
 
-function genv {
-    if [ -z "$1" ]; then
-        echo "Must specify name of target directory."
-        return 1
-    fi
-    z $1
-    __genv_rec $PWD
-    if [ $? -ne 0 ]; then
-        echo "Could not find Go workspace for $PWD."
-        return 1
-    fi
-}
-
-function __genv_rec {
-    stat $1/.genv 2>/dev/null 1>&2
-    if [ $? -eq 0 ]; then
-        export GOPATH=$1
-        pathadd $GOPATH/bin
-        return 0
-    elif [ "$1" != "/" ]; then
-        __genv_rec `dirname $1`
-        return $?
-    else
-        return 1
-    fi
-}
-
 function pathadd() {
     # From
     # http://superuser.com/questions/39751/add-directory-to-path-if-its-not-already-there
@@ -129,4 +99,10 @@ function godeps {
     go list -f '{{ join .Deps "\n" }}' $1
 }
 
-[ -f /Users/torin/.travis/travis.sh ] && source /Users/torin/.travis/travis.sh
+function yaml2json {
+    directory=$(dirname "$1")
+    filename=$(basename "$1")
+    stripped="${filename%.*}"
+    json_file="$directory/$stripped.json"
+    python -c 'import sys, yaml, json; json.dump(yaml.load(sys.stdin), sys.stdout, sort_keys=True, indent=4)' < $1 >$json_file
+}

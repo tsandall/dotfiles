@@ -74,12 +74,20 @@ function set_git_prompt() {
     GIT_PROMPT="${git_branch}${git_dirty}"
 }
 
+# Shortened PWD
+function sps {
+    if [ ${#PWD} -gt 40 ]; then
+        echo "$PWD" | sed -E 's|/(...)[^/]*|/\1|g'
+    else
+        echo "$PWD"
+    fi
+}
+
 function set_bash_prompt () {
   # Set the PROMPT_SYMBOL variable. We do this first so we don't lose the
   # return value of the last command.
   set_prompt_symbol $?
 
-  set_dev_env
   set_git_prompt
 
   # Set the bash prompt variable.
