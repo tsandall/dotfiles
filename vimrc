@@ -1,7 +1,19 @@
+set nocompatible
+
+call plug#begin("~/.vim/plugged")
+
+Plug 'SirVer/ultisnips'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'davidhalter/jedi-vim'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'tsandall/vim-rego'
+Plug 'quanganhdo/grb256'
+
+call plug#end()
+
 filetype detect
 filetype plugin indent on
-
-set nocompatible
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
@@ -17,14 +29,8 @@ set textwidth=78
 set formatoptions=tcroq
 set wildmode=list:longest,list:full
 set wildignore=*.o,*.r,*.so,*.sl,*.tar,*.tgz,*.pyc
-set wildignore+=deb_dist
-set wildignore+=app_dist
 set wildignore+=*.egg-info
 set wildignore+=*charm-build
-set wildignore+=*.deb
-set wildignore+=_trial_temp
-set wildignore+=usr
-set wildignore+=target
 set wildignore+=vendor
 set suffixes=.bak,~,*.o,.info,.swp,.obj
 set history=1000
@@ -47,7 +53,6 @@ set hlsearch
 set incsearch
 set completeopt-=preview
 set encoding=utf-8
-au BufNewFile,BufRead *.tosca set filetype=hocon
 au BufNewFile,BufRead *.yml set filetype=yaml
 au BufRead *.txt set spell
 au BufRead *.peg set filetype=go
@@ -78,7 +83,6 @@ let g:UltiSnipsEditSplit="vertical"
 let g:ctrlp_custom_ignore="env"
 let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled=1
-let g:ycm_key_detailed_diagnostics=''
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
@@ -101,8 +105,6 @@ map <silent> <S-h> <C-w><
 map <silent> <S-l> <C-w>>
 map <silent> <C-k> :lne<cr>
 map <silent> <C-l> :lp<cr>
-map <silent> ,x :Bclose<cr>
-map <silent> ,z :Bclose!<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
@@ -110,13 +112,7 @@ map <silent> ,z :Bclose!<cr>
 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let g:khuno_max_line_length=120
-let g:python_highlight_builtins=1
-let g:python_highlight_exceptions=1
-let g:airline_section_b='%{TagInStatusLine()}'
-
 autocmd FileType python map ,r :w<cr>:!python %<cr>
-autocmd FileType python map ,t :w<cr>:!trial -e %<cr>
 autocmd FileType python map ,dt :call jedi#goto()<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
