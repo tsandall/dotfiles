@@ -18,6 +18,3 @@ Run `vim` and then execute the following command:
 ```
 :PlugInstall
 ```
-
-> Ignore the "Error detected ... Cannot find color scheme 'grb256'" message on
-> first startup. The :PlugInstall command will pull down the color scheme.
