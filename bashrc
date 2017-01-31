@@ -46,9 +46,7 @@ alias vi='vim'
 alias :e='vim'
 alias :q='exit'
 alias :w='sync'
-alias screen-start='screen -d -R -c $HOME/.screenrc -S $1'
 alias grep='grep --color=auto -E'
-alias mytodo='ack "TODO\(tsandall\)"'
 alias ll='ls -l -h'
 
 case $( uname -s ) in
