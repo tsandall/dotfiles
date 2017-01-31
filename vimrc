@@ -39,6 +39,7 @@ set smartcase
 set hlsearch
 set incsearch
 set completeopt-=preview
+set clipboard=unnamed
 
 fun! TrimWhitespace()
     let l:save = winsaveview()

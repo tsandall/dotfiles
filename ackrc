@@ -1,1 +1,4 @@
 --ignore-dir=vendor
+--type-set=markdown=.md
+--sort-files
+--break
