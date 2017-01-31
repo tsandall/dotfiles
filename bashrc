@@ -15,7 +15,7 @@ export PS1='\u:\W\$ '
 export LANGUAGE=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
-export HISTCONTROL=erasedups 
+export HISTCONTROL=erasedups
 export HISTSIZE=99999
 export EDITOR="vim"
 
@@ -27,10 +27,13 @@ export PATH=$HOME/bin/sbt/bin:$PATH
 export PATH=$HOME/lib/scala-2.11.6/bin:$PATH
 export PATH=$HOME/.gem/ruby/2.0.0/bin:$PATH
 export PATH=$GOPATH/bin:$PATH
-source $HOME/venv/bin/activate 
+
+if [ -f $HOME/venv/bin/activate ]; then
+    source $HOME/venv/bin/activate
+fi
 
 # ---------------------------------
-# Prompt 
+# Prompt
 # ---------------------------------
 
 source $HOME/.dotfiles/promptrc
