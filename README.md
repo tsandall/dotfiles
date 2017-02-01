@@ -6,7 +6,7 @@
 git clone https://github.com/tsandall/dotfiles ~/.dotfiles
 ln -s ~/.dotfiles/bashrc ~/.bashrc
 ln -s ~/.dotfiles/screenrc ~/.screenrc
-ln -s ~/.dotfiles/bashrc ~/.ackrc
+ln -s ~/.dotfiles/ackrc ~/.ackrc
 ln -s ~/.dotfiles/vimrc ~/.vimrc
 ln -s ~/.dotfiles/vim ~/.vim
 ```
