@@ -70,3 +70,7 @@ function dclear {
     docker kill $(docker ps -a -q) || true
     docker rm $(docker ps -a -q) || true
 }
+
+function dopa {
+    docker run -it --rm openpolicyagent/opa:latest
+}
