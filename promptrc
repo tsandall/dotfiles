@@ -20,31 +20,6 @@ function set_prompt_symbol () {
     fi
 }
 
-function set_dev_env() {
-
-  # Set Python virtualenv name if activated
-  if [ -n "$VIRTUAL_ENV" ]; then
-    DEV_ENV="${COLOR_NONE}${YELLOW}`basename \"$VIRTUAL_ENV\"`${COLOR_NONE}"
-  else
-    DEV_ENV=""
-  fi
-
-  # Set Golang GOPATH name if set
-  if [ -n "$GOPATH" ]; then
-    GOLANG_WORKSPACE="${COLOR_NONE}${YELLOW}`basename \"$GOPATH\"`${COLOR_NONE}"
-    if [ -n "$DEV_ENV" ]; then
-        DEV_ENV="${DEV_ENV}/${GOLANG_WORKSPACE}"
-    else
-        DEV_ENV=$GOLANG_WORKSPACE
-    fi
-  fi
-
-  # Wrap names in '[]' if set
-  if [ -n "$DEV_ENV" ]; then
-    DEV_ENV="${COLOR_NONE}[${DEV_ENV}${COLOR_NONE}]"
-  fi
-}
-
 # Copied from https://github.com/jimeh/git-aware-prompt
 find_git_branch() {
   # Based on: http://stackoverflow.com/a/13003854/170413
@@ -74,24 +49,21 @@ function set_git_prompt() {
     GIT_PROMPT="${git_branch}${git_dirty}"
 }
 
-# Shortened PWD
-function sps {
-    if [ ${#PWD} -gt 40 ]; then
-        echo "$PWD" | sed -E 's|/(...)[^/]*|/\1|g'
-    else
-        echo "$PWD"
-    fi
+function set_kube_prompt()
+{
+    KUBE_CONTEXT=$(grep 'current-context:' ~/.kube/config | cut -d ' ' -f 2)
+	KUBE_PROMPT="[${YELLOW}${KUBE_CONTEXT}${COLOR_NONE}]"
 }
 
 function set_bash_prompt () {
   # Set the PROMPT_SYMBOL variable. We do this first so we don't lose the
   # return value of the last command.
   set_prompt_symbol $?
-
   set_git_prompt
+  #set_kube_prompt
 
   # Set the bash prompt variable.
-  PS1="${DEV_ENV}${GIT_PROMPT}${COLOR_NONE}${LIGHT_GREEN}\u${COLOR_NONE}:${BLUE}\w${PROMPT_SYMBOL} "
+  PS1="${KUBE_PROMPT}${GIT_PROMPT}${COLOR_NONE}${LIGHT_GREEN}\u${COLOR_NONE}:${BLUE}\w${PROMPT_SYMBOL} "
 }
 
 # Tell bash to execute this function just before displaying its prompt.

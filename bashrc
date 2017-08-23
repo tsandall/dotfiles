@@ -32,6 +32,14 @@ if [ -f $HOME/venv/bin/activate ]; then
     source $HOME/venv/bin/activate
 fi
 
+# Colors for man
+export LESS_TERMCAP_mb=$'\e'"[1;31m"
+export LESS_TERMCAP_md=$'\e'"[1;31m"
+export LESS_TERMCAP_me=$'\e'"[0m"
+export LESS_TERMCAP_se=$'\e'"[0m"
+export LESS_TERMCAP_ue=$'\e'"[0m"
+export LESS_TERMCAP_us=$'\e'"[1;32m"
+
 # ---------------------------------
 # Prompt
 # ---------------------------------
@@ -55,7 +63,8 @@ case $( uname -s ) in
 esac
 
 alias gist='gist -c -p'
-alias kc='kubectl'
+alias k='kubectl'
+alias d='docker'
 
 function cdp {
     cd $(python -c "import os.path as _, ${1}; print _.dirname(_.realpath(${1}.__file__[:-1]))")
@@ -74,3 +83,5 @@ function dclear {
 function dopa {
     docker run -it --rm openpolicyagent/opa:latest
 }
+
+export STYRA_ROOT=/Users/torin/go/src/github.com/styrainc

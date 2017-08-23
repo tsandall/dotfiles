@@ -19,7 +19,7 @@ hi Visual cterm=none ctermfg=black ctermbg=green
 hi SpellBad cterm=none ctermbg=blue
 
 set wildmode=list:longest,list:full
-set wildignore=*.o,*.so,*.pyc,vendor
+set wildignore=*.o,*.so,*.pyc,vendor,node_modules
 set suffixes=.bak,~,*.o,.info,.swp,.obj
 set hidden
 set nobackup
@@ -52,6 +52,7 @@ au BufWritePre * :call TrimWhitespace()
 au BufRead *.txt set spell
 au BufRead *.log set nowrap
 au BufRead *.peg set filetype=go
+au BufRead,BufNewFile *.md setlocal textwidth=80
 
 au FileType yaml set sw=2
 au FileType html set sw=2
