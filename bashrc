@@ -2,6 +2,12 @@
 
 [ -z "$PS1" ] && return
 
+function __join() {
+    local IFS=$1
+    shift
+    echo "$*"
+}
+
 # ---------------------------------
 # Exports
 # ---------------------------------
@@ -15,7 +21,7 @@ export PS1='\u:\W\$ '
 export LANGUAGE=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
-export HISTCONTROL=erasedups
+export HISTCONTROL=erasedups:ignorespace
 export HISTSIZE=99999
 export EDITOR="vim"
 
@@ -23,14 +29,13 @@ export EDITOR="vim"
 export GOPATH=$HOME/go
 export PATH=/usr/local/sbin:$PATH
 export PATH=$HOME/bin:$PATH
-export PATH=$HOME/bin/sbt/bin:$PATH
-export PATH=$HOME/lib/scala-2.11.6/bin:$PATH
 export PATH=$HOME/.gem/ruby/2.0.0/bin:$PATH
 export PATH=$GOPATH/bin:$PATH
-
 if [ -f $HOME/venv/bin/activate ]; then
     source $HOME/venv/bin/activate
 fi
+
+export KUBECONFIG=$(__join ':' $HOME/.kube/config.d/*):$HOME/.kube/config
 
 # Colors for man
 export LESS_TERMCAP_mb=$'\e'"[1;31m"
@@ -65,23 +70,14 @@ esac
 alias gist='gist -c -p'
 alias k='kubectl'
 alias d='docker'
+alias code='/Applications/Visual\ Studio\ Code.app/Contents/MacOS/Electron'
 
 function cdp {
     cd $(python -c "import os.path as _, ${1}; print _.dirname(_.realpath(${1}.__file__[:-1]))")
 }
 
-function denter {
-    CONTAINER_ID=$(docker ps | grep "$1" | awk '{print $1}' | head -n 1)
-    docker exec -it $CONTAINER_ID bash
+function json_loads {
+    python -c 'import json; import sys; print json.load(sys.stdin)' | jq
 }
 
-function dclear {
-    docker kill $(docker ps -a -q) || true
-    docker rm $(docker ps -a -q) || true
-}
-
-function dopa {
-    docker run -it --rm openpolicyagent/opa:latest
-}
-
-export STYRA_ROOT=/Users/torin/go/src/github.com/styrainc
+source $HOME/.dotfiles/styrarc
