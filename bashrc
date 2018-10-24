@@ -79,5 +79,3 @@ function cdp {
 function json_loads {
     python -c 'import json; import sys; print json.load(sys.stdin)' | jq
 }
-
-source $HOME/.dotfiles/styrarc
