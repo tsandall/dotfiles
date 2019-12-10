@@ -2,6 +2,7 @@ set nocompatible
 
 call plug#begin("~/.vim/plugged")
 
+Plug 'nelstrom/vim-markdown-folding'
 Plug 'quanganhdo/grb256'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -16,6 +17,7 @@ Plug 'rhysd/vim-wasm'
 
 call plug#end()
 
+colorscheme grb256
 filetype plugin indent on
 
 hi Visual cterm=none ctermfg=black ctermbg=green
@@ -44,6 +46,7 @@ set hlsearch
 set incsearch
 set completeopt-=preview
 set clipboard=unnamed
+set fillchars="fold: "
 
 fun! TrimWhitespace()
     let l:save = winsaveview()
@@ -62,6 +65,7 @@ au BufRead ~/.kube/config set filetype=yaml
 
 au FileType c set sw=4
 au FileType yaml set sw=2
+au FileType yaml set expandtab
 au FileType html set sw=2
 au FileType js set sw=2
 au FileType python set nocindent

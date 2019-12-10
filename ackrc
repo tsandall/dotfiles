@@ -1,4 +1,5 @@
 --ignore-dir=vendor
+--type-set=GOTEST=_test.go
 --type-set=rego=.rego
 --type-set=markdown=.md
 --sort-files
