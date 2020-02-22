@@ -32,6 +32,13 @@ export PATH=$HOME/bin:$PATH
 export PATH=$HOME/.gem/ruby/2.0.0/bin:$PATH
 export PATH=$GOPATH/bin:$PATH
 export PATH=$HOME/.cargo/bin:$PATH
+export PATH=/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin:$PATH
+export PATH=$HOME/scratch/google-cloud-sdk/bin:$PATH
+
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
+
 if [ -f $HOME/venv/bin/activate ]; then
     source $HOME/venv/bin/activate
 fi
@@ -56,15 +63,19 @@ source $HOME/.dotfiles/promptrc
 # Utility Functions/Aliases
 # ---------------------------------
 
-alias emacs='emacs -nw'
+alias emacs='emacs'
 alias grep='grep --color=auto -E'
 alias ll='ls -l -h'
-alias pbcopy='xclip -selection clipboard'
-alias pbpaste='xclip -selection clipboard -out'
 
 case $( uname -s ) in
-    Darwin) alias ls='ls -G';;
-    *)      alias ls='ls --color=auto';;
+    Darwin)
+        alias ls='ls -G'
+        ;;
+    *)
+        alias pbcopy='xclip -selection clipboard'
+		alias pbpaste='xclip -selection clipboard -out'
+        alias ls='ls --color=auto'
+        ;;
 esac
 
 alias gist='gist -c -p'
