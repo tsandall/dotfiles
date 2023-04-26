@@ -34,6 +34,7 @@ export PATH=$GOPATH/bin:$PATH
 export PATH=$HOME/.cargo/bin:$PATH
 export PATH=/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin:$PATH
 export PATH=$HOME/scratch/google-cloud-sdk/bin:$PATH
+export PATH=/mnt/c/Users/torin/AppData/Local/Programs/Microsoft\ VS\ Code:$PATH
 
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
@@ -43,7 +44,7 @@ if [ -f $HOME/venv/bin/activate ]; then
     source $HOME/venv/bin/activate
 fi
 
-export KUBECONFIG=$(__join ':' $HOME/.kube/config.d/*)
+export KUBECONFIG=$KUBECONFIG:$(__join ':' $HOME/.kube/config.d/*)
 
 # Colors for man
 export LESS_TERMCAP_mb=$'\e'"[1;31m"
@@ -63,6 +64,7 @@ source $HOME/.dotfiles/promptrc
 # Utility Functions/Aliases
 # ---------------------------------
 
+alias code='Code.exe'
 alias emacs='emacs'
 alias grep='grep --color=auto -E'
 alias ll='ls -l -h'
@@ -72,14 +74,43 @@ case $( uname -s ) in
         alias ls='ls -G'
         ;;
     *)
-        alias pbcopy='xclip -selection clipboard'
-		alias pbpaste='xclip -selection clipboard -out'
+        alias pbcopy='clip.exe'
+        alias pbpaste='powershell.exe Get-Clipboard'
         alias ls='ls --color=auto'
         ;;
 esac
 
-alias gist='gist -c -p'
+alias gist='gist-paste -c -p'
 
-function json_loads {
-    python -c 'import json; import sys; print json.load(sys.stdin)' | jq
+function oq {
+    # pipe thru jq to colorize
+	opa eval --format pretty --stdin-input 'input' | jq
 }
+
+. "$HOME/.cargo/env"
+
+SSH_ENV="$HOME/.ssh/agent-environment"
+
+function start_agent {
+    echo "Initialising new SSH agent..."
+    /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+    echo succeeded
+    chmod 600 "${SSH_ENV}"
+    . "${SSH_ENV}" > /dev/null
+    /usr/bin/ssh-add;
+}
+
+function now_8601_utc {
+	date -u +"%Y-%m-%dT%H:%M:%S.000Z"
+}
+
+if [ -f "${SSH_ENV}" ]; then
+    . "${SSH_ENV}" > /dev/null
+    ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+        start_agent;
+    }
+else
+    start_agent;
+fi
+
+cd $HOME
